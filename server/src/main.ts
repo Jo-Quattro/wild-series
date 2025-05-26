@@ -14,14 +14,11 @@ const port = process.env.APP_PORT;
 const sayWelcome: RequestHandler = (_req, res) => {
   res.send("Welcome to Wilder Series");
 };
+app.get("/", sayWelcome);
 // Start the server and listen on the specified port
 app
   .listen(port, () => {
     console.info(`Server is listening on port ${port}`);
-
-    if (port === "3310") {
-      app.get("/", sayWelcome);
-    }
   })
   .on("error", (err: Error) => {
     console.error("Error:", err.message);
