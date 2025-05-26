@@ -14,7 +14,7 @@ body {
 
 #root {
   height: 100vh;
-  background-image: url("./assets/images/background.webp");
+  background-color: rgb(43, 42, 42);
   background-size: cover;
   background-position: top;
   display: grid;
