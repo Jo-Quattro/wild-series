@@ -32,9 +32,9 @@ import type { RequestHandler } from "express";
 
 const browse: RequestHandler = (req, res) => {
   if (req.query.q != null) {
-    const filteredCategories = categories.filter((category) =>
-      category.name.toLowerCase().includes(req.query.q as string),
-    );
+    const filteredCategories = categories.filter((category) => {
+      return category.name.toLowerCase().includes(req.query.q as string);
+    });
     res.json(filteredCategories);
   } else {
     res.json(categories);
@@ -42,11 +42,12 @@ const browse: RequestHandler = (req, res) => {
 };
 
 const read: RequestHandler = (req, res) => {
-  const category = categories.find(
-    (c) =>
+  const category = categories.find((c) => {
+    return (
       c.name.toLowerCase() === req.params.id.toLowerCase() ||
-      c.id === Number.parseInt(req.params.id),
-  );
+      c.id === Number.parseInt(req.params.id)
+    );
+  });
 
   if (category != null) {
     res.json(category);

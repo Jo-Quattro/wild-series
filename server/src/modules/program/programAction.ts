@@ -29,12 +29,13 @@ import type { RequestHandler } from "express";
 
 const browse: RequestHandler = (req, res) => {
   if (req.query.q != null) {
-    const filteredPrograms = programs.filter(
-      (program) =>
+    const filteredPrograms = programs.filter((program) => {
+      return (
         program.synopsis.includes(req.query.q as string) ||
         program.country.toLowerCase().includes(req.query.q as string) ||
-        program.year.toString().includes(req.query.q as string),
-    );
+        program.year.toString().includes(req.query.q as string)
+      );
+    });
     res.json(filteredPrograms);
   } else {
     res.json(programs);
