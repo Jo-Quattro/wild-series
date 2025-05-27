@@ -1,48 +1,24 @@
 // Some data to make the trick
-
-const categories = [
-  {
-    id: 1,
-    name: "Comédie",
-  },
-  {
-    id: 2,
-    name: "Science-Fiction",
-  },
-  {
-    id: 3,
-    name: "Drame",
-  },
-  {
-    id: 4,
-    name: "Action",
-  },
-  {
-    id: 5,
-    name: "Aventure",
-  },
-  {
-    id: 6,
-    name: "Animation",
-  },
-];
+import categoryRepository from "./categoryRepository";
 
 // Declare the actions
 import type { RequestHandler } from "express";
 
-const browse: RequestHandler = (req, res) => {
+const browse: RequestHandler = async (req, res) => {
+  const categoriesFromDB = await categoryRepository.readAll();
   if (req.query.q != null) {
-    const filteredCategories = categories.filter((category) => {
+    const filteredCategories = categoriesFromDB.filter((category) => {
       return category.name.toLowerCase().includes(req.query.q as string);
     });
     res.json(filteredCategories);
   } else {
-    res.json(categories);
+    res.json(categoriesFromDB);
   }
 };
 
-const read: RequestHandler = (req, res) => {
-  const category = categories.find((c) => {
+const read: RequestHandler = async (req, res) => {
+  const categoriesFromDB = await categoryRepository.readAll();
+  const category = categoriesFromDB.find((c) => {
     return (
       c.name.toLowerCase() === req.params.id.toLowerCase() ||
       c.id === Number.parseInt(req.params.id)
@@ -60,7 +36,4 @@ const read: RequestHandler = (req, res) => {
 
 // Export them to import them somewhere else
 
-export default {
-  read,
-  browse,
-};
+export default { browse, read };
